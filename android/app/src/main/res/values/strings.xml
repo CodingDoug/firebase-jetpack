@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Firebase &amp; Jetpack Demo</string>
+    <string name="track_stocks">Track Two Stocks</string>
+    <string name="track_stocks_rv">Track Stocks with RecyclerView</string>
+</resources>

@@ -1,0 +1,8 @@
+rootProject.name = 'firebase-jetpack'
+
+include ':app'
+
+if (hasProperty('useScratch') && useScratch.toBoolean()) {
+    include ':scratch'
+}
+

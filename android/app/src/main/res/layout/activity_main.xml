@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.main.MainActivity"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/btn_log_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log in"
+                />
+
+            <Button
+                android:id="@+id/btn_log_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log out"
+                />
+
+            <Button
+                android:id="@+id/btn_toggle_db"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Toggle DB"
+                />
+
+            <Button
+                android:id="@+id/btn_track_two_stocks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Track Two Stocks"
+                />
+
+            <Button
+                android:id="@+id/btn_track_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Track RecyclerView"
+                />
+
+            <Button
+                android:id="@+id/btn_stock_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="History"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

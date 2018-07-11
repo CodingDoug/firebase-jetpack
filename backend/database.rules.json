@@ -1,0 +1,13 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": false,
+
+    "stocks-history": {
+      "$ticker": {
+        ".indexOn": "revTime"
+      }
+    }
+
+  }
+}
