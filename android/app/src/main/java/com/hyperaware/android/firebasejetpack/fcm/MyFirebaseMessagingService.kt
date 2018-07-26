@@ -55,7 +55,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setInputData(data)
             .build()
 
-        WorkManager.getInstance()!!
+        WorkManager.getInstance()
             .beginUniqueWork("sync_$ticker", ExistingWorkPolicy.REPLACE, workRequest)
             .enqueue()
     }
