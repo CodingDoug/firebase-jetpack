@@ -84,19 +84,20 @@ import { app } from "firebase-admin"
 
     private advanceStockPrice(stock: StockPrice) {
         const direction = Math.random()
-        const magnitude = Math.random() / 90
+        const magnitude = Math.random() / 150
 
         if (direction < .01) {
-            stock.price -= stock.price * .1
+            stock.price -= stock.price * .05
         }
-        else if (direction < .35) {
+        else if (direction < .30) {
             stock.price += stock.price * magnitude
         }
-        else if (direction < .45) {
+        else if (direction < .40) {
             stock.price -= stock.price * magnitude
         }
 
         if (stock.price < .1) { stock.price = .1 }
+        else if (stock.price > 400) { stock.price = 20 }
     }
 
 }
