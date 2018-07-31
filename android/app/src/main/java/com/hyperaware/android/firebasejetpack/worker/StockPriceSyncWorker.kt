@@ -37,7 +37,7 @@ class StockPriceSyncWorker : Worker(), KoinComponent {
     private val repo by inject<StockRepository>()
 
     override fun doWork(): Result {
-        val ticker = inputData.getString("ticker", null) ?: return Result.FAILURE
+        val ticker = inputData.getString("ticker") ?: return Result.FAILURE
         Log.d(TAG, "Synchronizing $ticker")
 
         val sync = repo.syncStockPrice(ticker, 5, TimeUnit.SECONDS)

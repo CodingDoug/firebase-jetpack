@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
 import com.hyperaware.android.firebasejetpack.databinding.StockPriceListItemBinding
+import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplay
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.android.ext.android.inject
@@ -62,7 +63,7 @@ class StockPriceTrackerActivity : AppCompatActivity() {
                     }
                     else if (stockPriceDisplay.exception != null) {
                         Log.e(TAG, "Observed unexpected exception", stockPriceDisplay.exception)
-                        TODO("Handle the error")
+                        binding.stockPrice = StockPriceDisplay(ticker, "ERR", "")
                     }
                 }
             })

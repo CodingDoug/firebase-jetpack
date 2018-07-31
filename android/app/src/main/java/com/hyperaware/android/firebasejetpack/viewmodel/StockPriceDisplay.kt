@@ -18,7 +18,6 @@ package com.hyperaware.android.firebasejetpack.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.text.format.DateFormat
 import com.hyperaware.android.firebasejetpack.model.StockPrice
 import com.hyperaware.android.firebasejetpack.viewmodel.Formatters.priceFormatter
 import com.hyperaware.android.firebasejetpack.viewmodel.Formatters.timeFormatter
@@ -48,8 +47,7 @@ fun StockPrice.toStockPriceDisplay() = StockPriceDisplay(
 )
 
 @SuppressLint("SimpleDateFormat")
-private object Formatters : KoinComponent {
-    private val app = get<Application>()
+private object Formatters {
 
     val timeFormatter by lazy {
         SimpleDateFormat("HH:mm:ss")
@@ -61,4 +59,5 @@ private object Formatters : KoinComponent {
         priceFormatter.maximumFractionDigits = 2
         priceFormatter
     }
+
 }
