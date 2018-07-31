@@ -33,7 +33,6 @@ let machine  // lazy init
  */
 
 export const onStockMachineWrite = functions.database.ref('/machine').onWrite(async change => {
-    const before = change.after.val()
     const after = change.after.val()
     if (!after) {
         console.log("/machine is empty")
@@ -55,7 +54,15 @@ export const onStockMachineWrite = functions.database.ref('/machine').onWrite(as
         const app = initializeApp()
         machine = new StockMachine(app)
     }
-    await machine.onTick()
+
+    try {
+        await machine.onTick()
+    }
+    catch (e) {
+        console.error('Problem with machine.onTick()', e)
+    }
+
+    // If this fails, the machine stops!
     await change.after.ref.child('lastTick').set(now)
 
     return null
