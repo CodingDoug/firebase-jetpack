@@ -21,11 +21,16 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.hyperaware.android.firebasejetpack.activity.multitrackerrv.StocksRecyclerViewAdapter
 import com.hyperaware.android.firebasejetpack.databinding.HistoricalPriceListItemBinding
 import com.hyperaware.android.firebasejetpack.repo.QueryItem
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplay
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplayHistoryQueryResults
+
+/**
+ * This is left as an example of how NOT to work with RecyclerView using
+ * LiveData.  It's inefficient because it effectively has to refresh every
+ * item in the list every time there's an update anywhere in the list.
+ */
 
 internal class StockPriceHistoryRecyclerViewAdapter(
     private val liveData: LiveData<StockPriceDisplayHistoryQueryResults>,
@@ -65,9 +70,9 @@ internal class StockPriceHistoryRecyclerViewAdapter(
             }
         }
 
-        // TODO: This is inefficient!
-        // Need to figure out exactly which items changed or moved and
-        // notify only those.
+        // Note: This is inefficient because it causes the entire list
+        // to refresh at every update.  It's better ot use a ListAdapter
+        // since it diffs the items in the list to look for changes.
         notifyDataSetChanged()
     }
 
@@ -81,7 +86,7 @@ internal class StockPriceHistoryRecyclerViewAdapter(
     override fun onBindViewHolder(holder: HistoricalPriceViewHolder, position: Int) {
         val history = this.history
         if (history != null) {
-            val stockPrice = history[position].getItem()
+            val stockPrice = history[position].item
             holder.binding.stockPrice = stockPrice
         }
         else {

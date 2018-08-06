@@ -25,13 +25,15 @@ import com.hyperaware.android.firebasejetpack.model.StockPrice
  */
 
 interface QueryItem<T> {
-    fun getItem(): T
-    fun getId(): String
+    val item: T
+    val id: String
 }
 
-data class StockPriceQueryItem(private val item: StockPrice, private val id: String) : QueryItem<StockPrice> {
-    override fun getItem() = item
-    override fun getId() = id
+data class StockPriceQueryItem(private val _item: StockPrice, private val _id2: String) : QueryItem<StockPrice> {
+    override val item: StockPrice
+        get() = _item
+    override val id: String
+        get() = _id2
 }
 
 typealias StockPriceOrException = DataOrException<StockPrice, Exception>

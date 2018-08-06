@@ -38,7 +38,6 @@ import com.hyperaware.android.firebasejetpack.repo.firestore.FirestoreStockRepos
 import com.hyperaware.android.firebasejetpack.repo.rtdb.RealtimeDatabaseStockRepository
 import org.koin.android.ext.android.inject
 
-
 class MainActivity : AppCompatActivity() {
 
     companion object {

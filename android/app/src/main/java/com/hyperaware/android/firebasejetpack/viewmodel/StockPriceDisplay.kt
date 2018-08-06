@@ -17,12 +17,9 @@
 package com.hyperaware.android.firebasejetpack.viewmodel
 
 import android.annotation.SuppressLint
-import android.app.Application
 import com.hyperaware.android.firebasejetpack.model.StockPrice
 import com.hyperaware.android.firebasejetpack.viewmodel.Formatters.priceFormatter
 import com.hyperaware.android.firebasejetpack.viewmodel.Formatters.timeFormatter
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.get
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 
@@ -45,6 +42,9 @@ fun StockPrice.toStockPriceDisplay() = StockPriceDisplay(
     priceFormatter.format(this.price),
     timeFormatter.format(this.time)
 )
+
+val stockPriceDisplayDiffCallback = object : QueryItemDiffCallback<StockPriceDisplay>() {}
+
 
 @SuppressLint("SimpleDateFormat")
 private object Formatters {

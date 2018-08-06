@@ -16,38 +16,65 @@
 
 package com.hyperaware.android.firebasejetpack.activity.livepricehistory
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
+import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplayHistoryQueryResults
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.android.ext.android.inject
 
 class StockPriceHistoryActivity : AppCompatActivity() {
 
+    companion object {
+        private const val TAG = "StockPriceHistoryAct"
+        private const val ticker = "HSTK"
+    }
+
     private val auth by inject<FirebaseAuth>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val ticker = "HSTK"
-
-        // The model
+        // The model is a LiveData that contains a list of history items
         val priceHistoryViewModel = ViewModelProviders.of(this).get(StockPriceHistoryViewModel::class.java)
 
         // The root view/scaffolding
         setContentView(R.layout.activity_price_history)
-        toolbar.title = "HSTK Recent History"
+        toolbar.title = "$ticker Recent History"
+
         findViewById<RecyclerView>(R.id.rv_price_history).apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@StockPriceHistoryActivity)
-            adapter = StockPriceHistoryRecyclerViewAdapter(
-                priceHistoryViewModel.getStockPriceHistory(ticker),
-                this@StockPriceHistoryActivity)
+            layoutManager = MyLinearLayoutManager(this@StockPriceHistoryActivity)
+
+            val listAdapter = StockPriceHistoryListAdapter()
+
+            // Observe the stock price history changes, and submit them to the
+            // ListAdapter.  Order of the list is reversed so that new data
+            // appears at the top.
+            //
+            val historyObserver = Observer<StockPriceDisplayHistoryQueryResults> {
+                if (it != null) {
+                    if (it.data != null) {
+                        listAdapter.submitList(it.data.reversed())
+                    }
+                    else if (it.exception != null) {
+                        Log.e(TAG, "Error getting stock history", it.exception)
+                        TODO("Handle the error")
+                    }
+                }
+            }
+            val historyLiveData = priceHistoryViewModel.getStockPriceHistory(ticker)
+            historyLiveData.observe(this@StockPriceHistoryActivity, historyObserver)
+
+            adapter = listAdapter
         }
     }
 
@@ -65,6 +92,22 @@ class StockPriceHistoryActivity : AppCompatActivity() {
         if (auth.currentUser == null) {
             finish()
         }
+    }
+
+}
+
+
+private class MyLinearLayoutManager(private val context: Context) : LinearLayoutManager(context) {
+
+    // Force new items appear at the top
+    override fun onItemsAdded(recyclerView: RecyclerView?, positionStart: Int, itemCount: Int) {
+        super.onItemsAdded(recyclerView, positionStart, itemCount)
+        scrollToPosition(0)
+    }
+
+    // Prevent scrolling (for now)
+    override fun canScrollVertically(): Boolean {
+        return false
     }
 
 }

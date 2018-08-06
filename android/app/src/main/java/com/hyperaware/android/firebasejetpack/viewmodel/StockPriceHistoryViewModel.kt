@@ -30,14 +30,20 @@ class StockPriceHistoryViewModel : ViewModel(), KoinComponent {
 
     private val stockRepo by inject<StockRepository>()
 
+    private var stockHistoriesLiveData = HashMap<String, LiveData<StockPriceDisplayHistoryQueryResults>>()
+
     fun getStockPriceHistory(ticker: String): LiveData<StockPriceDisplayHistoryQueryResults> {
-        // Convert StockPriceHistoryQueryResults to StockPriceDisplayHistoryQueryResults
-        val liveDataIn = stockRepo.getStockPriceHistoryLiveData(ticker)
-        return Transformations.map(liveDataIn) { results ->
-            val convertedResults = results.data?.map { StockPriceDisplayQueryItem(it) }
-            val exception = results.exception
-            StockPriceDisplayHistoryQueryResults(convertedResults, exception)
+        var liveData = stockHistoriesLiveData[ticker]
+        if (liveData == null) {
+            // Convert StockPriceHistoryQueryResults to StockPriceDisplayHistoryQueryResults
+            val historyLiveData = stockRepo.getStockPriceHistoryLiveData(ticker)
+            liveData = Transformations.map(historyLiveData) { results ->
+                val convertedResults = results.data?.map { StockPriceDisplayQueryItem(it) }
+                val exception = results.exception
+                StockPriceDisplayHistoryQueryResults(convertedResults, exception)
+            }
         }
+        return liveData!!
     }
 
 }
@@ -45,14 +51,11 @@ class StockPriceHistoryViewModel : ViewModel(), KoinComponent {
 
 typealias StockPriceDisplayHistoryQueryResults = QueryResultsOrException<StockPriceDisplay, Exception>
 
-private data class StockPriceDisplayQueryItem(private val item: QueryItem<StockPrice>) : QueryItem<StockPriceDisplay> {
-    private val convertedPrice = item.getItem().toStockPriceDisplay()
+private data class StockPriceDisplayQueryItem(private val _item: QueryItem<StockPrice>) : QueryItem<StockPriceDisplay> {
+    private val convertedPrice = _item.item.toStockPriceDisplay()
 
-    override fun getItem(): StockPriceDisplay {
-        return convertedPrice
-    }
-
-    override fun getId(): String {
-        return item.getId()
-    }
+    override val item: StockPriceDisplay
+        get() = convertedPrice
+    override val id: String
+        get() = _item.id
 }
