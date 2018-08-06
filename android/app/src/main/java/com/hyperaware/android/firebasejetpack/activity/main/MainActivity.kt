@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
 
         btnStockHistory = findViewById(R.id.btn_stock_history)
         btnStockHistory.setOnClickListener {
-            startActivity(Intent(this, StockPriceHistoryActivity::class.java))
+            startActivity(StockPriceHistoryActivity.newIntent(this, "HSTK"))
         }
     }
 

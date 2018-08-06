@@ -28,7 +28,8 @@ import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceViewModel
 
 internal class StocksRecyclerViewAdapter(
     private val stockPriceViewModel: StockPriceViewModel,
-    private val lifecycleOwner: LifecycleOwner
+    private val lifecycleOwner: LifecycleOwner,
+    private val itemClickListener: ItemClickListener<StockViewHolder>
 ) : RecyclerView.Adapter<StockViewHolder>() {
 
     companion object {
@@ -41,7 +42,9 @@ internal class StocksRecyclerViewAdapter(
         // Using data binding on the individual views
         val inflater = LayoutInflater.from(parent.context)
         val binding = StockPriceListItemBinding.inflate(inflater, parent, false)
-        return StockViewHolder(binding)
+        val holder = StockViewHolder(binding)
+        holder.itemClickListener = itemClickListener
+        return holder
     }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
@@ -49,7 +52,7 @@ internal class StocksRecyclerViewAdapter(
         holder.binding.tvTicker.text = ticker
         holder.binding.tvPrice.text = "..."
 
-        // New a view gets bound, observe the stocks changes, and update the view
+        // When a view gets bound, observe the stocks changes, and update the view
         val observer = Observer<StockPriceDisplayOrException> { stockPriceDisplay ->
             if (stockPriceDisplay != null) {
                 if (stockPriceDisplay.data != null) {
@@ -65,6 +68,7 @@ internal class StocksRecyclerViewAdapter(
         val stockLiveData = stockPriceViewModel.getStockLiveData(ticker)
         stockLiveData.observe(lifecycleOwner, observer)
 
+        holder.ticker = ticker
         holder.stockPriceLiveData = stockLiveData
         holder.observer = observer
     }
@@ -79,6 +83,10 @@ internal class StocksRecyclerViewAdapter(
 
     override fun getItemCount(): Int {
         return allTickersList.size
+    }
+
+    internal interface ItemClickListener<StockViewHolder> {
+        fun onItemClick(holder: StockViewHolder)
     }
 
 }

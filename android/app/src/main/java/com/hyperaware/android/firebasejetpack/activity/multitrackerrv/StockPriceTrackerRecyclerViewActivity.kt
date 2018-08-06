@@ -23,6 +23,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
+import com.hyperaware.android.firebasejetpack.activity.livepricehistory.StockPriceHistoryActivity
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.android.ext.android.inject
@@ -40,10 +41,15 @@ class StockPriceTrackerRecyclerViewActivity : AppCompatActivity() {
         // The root view/scaffolding
         setContentView(R.layout.activity_multi_tracker_recycler_view)
         toolbar.setTitle(R.string.track_stocks_rv)
+
         findViewById<RecyclerView>(R.id.rv_stocks).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@StockPriceTrackerRecyclerViewActivity)
-            adapter = StocksRecyclerViewAdapter(stocksViewModel, this@StockPriceTrackerRecyclerViewActivity)
+            adapter = StocksRecyclerViewAdapter(
+                stocksViewModel,
+                this@StockPriceTrackerRecyclerViewActivity,
+                ItemClickListener()
+            )
         }
     }
 
@@ -60,6 +66,15 @@ class StockPriceTrackerRecyclerViewActivity : AppCompatActivity() {
     private val authStateListener = FirebaseAuth.AuthStateListener { auth ->
         if (auth.currentUser == null) {
             finish()
+        }
+    }
+
+    internal inner class ItemClickListener : StocksRecyclerViewAdapter.ItemClickListener<StockViewHolder> {
+        override fun onItemClick(holder: StockViewHolder) {
+            startActivity(StockPriceHistoryActivity.newIntent(
+                this@StockPriceTrackerRecyclerViewActivity,
+                holder.ticker!!)
+            )
         }
     }
 

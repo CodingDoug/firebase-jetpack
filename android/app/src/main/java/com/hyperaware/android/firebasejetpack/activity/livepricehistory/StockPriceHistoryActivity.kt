@@ -19,6 +19,7 @@ package com.hyperaware.android.firebasejetpack.activity.livepricehistory
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -35,13 +36,22 @@ class StockPriceHistoryActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "StockPriceHistoryAct"
-        private const val ticker = "HSTK"
+        const val EXTRA_TICKER = "StockPriceHistoryActivity.ticker"
+
+        fun newIntent(context: Context, ticker: String): Intent {
+            val intent = Intent(context, StockPriceHistoryActivity::class.java)
+            intent.putExtra(StockPriceHistoryActivity.EXTRA_TICKER, ticker)
+            return intent
+        }
     }
 
     private val auth by inject<FirebaseAuth>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val ticker = intent.getStringExtra(EXTRA_TICKER)
+            ?: throw IllegalArgumentException("No ticker provided")
 
         // The model is a LiveData that contains a list of history items
         val priceHistoryViewModel = ViewModelProviders.of(this).get(StockPriceHistoryViewModel::class.java)

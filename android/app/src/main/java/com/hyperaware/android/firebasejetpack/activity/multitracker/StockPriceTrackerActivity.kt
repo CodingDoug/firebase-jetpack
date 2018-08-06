@@ -18,12 +18,14 @@ package com.hyperaware.android.firebasejetpack.activity.multitracker
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
+import com.hyperaware.android.firebasejetpack.activity.livepricehistory.StockPriceHistoryActivity
 import com.hyperaware.android.firebasejetpack.databinding.StockPriceListItemBinding
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplay
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceViewModel
@@ -34,7 +36,7 @@ class StockPriceTrackerActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "StockPriceTrackerAct"
-        private val tickers = sortedSetOf("HSTK", "FBAS")
+        private val TICKERS = sortedSetOf("HSTK", "FBAS")
     }
 
     private val auth by inject<FirebaseAuth>()
@@ -50,7 +52,7 @@ class StockPriceTrackerActivity : AppCompatActivity() {
         // The model
         val stocksViewModel = ViewModelProviders.of(this).get(StockPriceViewModel::class.java)
 
-        tickers.forEach { ticker ->
+        TICKERS.forEach { ticker ->
             // The stock views
             val binding = StockPriceListItemBinding.inflate(layoutInflater, container, true)
 
@@ -67,6 +69,11 @@ class StockPriceTrackerActivity : AppCompatActivity() {
                     }
                 }
             })
+
+            binding.root.setOnClickListener {
+                val intent = StockPriceHistoryActivity.newIntent(this, ticker)
+                startActivity(intent)
+            }
         }
     }
 
