@@ -20,7 +20,7 @@ import * as functions from 'firebase-functions'
 import { initializeApp } from 'firebase-admin'
 import { StockMachine } from './stocks/stock-machine'
 
-const PERIOD = 1000  // 1 second between ticks
+const PERIOD = 1500  // 1.5 seconds between ticks
 
 let machine  // lazy init
 
