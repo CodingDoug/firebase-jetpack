@@ -16,7 +16,6 @@
 
 package com.hyperaware.android.firebasejetpack.koin
 
-import android.app.Application
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
@@ -36,8 +35,7 @@ class KoinInitContentProvider : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
-        val app = context.applicationContext as Application
-        app.startKoin(app, allModules)
+        startKoin(context, allModules)
         val config = SingletonRuntimeConfig.instance
         Log.i(TAG, "StockRepository: ${config.stockRepository.javaClass.canonicalName}")
         return true

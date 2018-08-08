@@ -20,11 +20,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hyperaware.android.firebasejetpack.config.AppExecutors
-import com.hyperaware.android.firebasejetpack.repo.firestore.FirestoreStockRepository
 import com.hyperaware.android.firebasejetpack.repo.StockRepository
+import com.hyperaware.android.firebasejetpack.repo.firestore.FirestoreStockRepository
 import com.hyperaware.android.firebasejetpack.repo.rtdb.RealtimeDatabaseStockRepository
 import org.koin.dsl.module.Module
-import org.koin.dsl.module.applicationContext
+import org.koin.dsl.module.module
 
 interface RuntimeConfig {
     var stockRepository: StockRepository
@@ -41,18 +41,18 @@ class SingletonRuntimeConfig : RuntimeConfig {
 private val firestoreStockRepository by lazy { FirestoreStockRepository() }
 private val realtimeDatabaseStockRepository by lazy { RealtimeDatabaseStockRepository() }
 
-val appModule: Module = applicationContext {
-    bean { firestoreStockRepository }
-    bean { realtimeDatabaseStockRepository }
-    bean { SingletonRuntimeConfig.instance as RuntimeConfig }
+val appModule: Module = module {
+    single { firestoreStockRepository }
+    single { realtimeDatabaseStockRepository }
+    single { SingletonRuntimeConfig.instance as RuntimeConfig }
     factory { get<RuntimeConfig>().stockRepository }
-    bean { AppExecutors.instance }
+    single { AppExecutors.instance }
 }
 
-val firebaseModule: Module = applicationContext {
-    bean { FirebaseAuth.getInstance() }
-    bean { FirebaseFirestore.getInstance() }
-    bean {
+val firebaseModule: Module = module {
+    single { FirebaseAuth.getInstance() }
+    single { FirebaseFirestore.getInstance() }
+    single {
         val instance = FirebaseDatabase.getInstance()
         instance.setPersistenceEnabled(false)
         instance
