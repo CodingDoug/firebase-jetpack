@@ -17,6 +17,9 @@
 package com.hyperaware.android.firebasejetpack.repo
 
 import android.arch.lifecycle.LiveData
+import android.arch.paging.PagedList
+import com.hyperaware.android.firebasejetpack.common.DataOrException
+import com.hyperaware.android.firebasejetpack.model.StockPrice
 import java.util.*
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
@@ -32,6 +35,8 @@ interface StockRepository {
     fun getStockPriceLiveData(ticker: String): LiveData<StockPriceOrException>
 
     fun getStockPriceHistoryLiveData(ticker: String): LiveData<StockPriceHistoryQueryResults>
+
+    fun getStockPricePagedListLiveData(pageSize: Int): LiveData<PagedList<QueryItemOrException<StockPrice>>>
 
     /**
      * Synchronizes one stock record so it's available to this repo while offline

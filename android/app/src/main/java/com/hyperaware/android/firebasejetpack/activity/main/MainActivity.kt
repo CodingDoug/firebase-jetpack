@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
 import com.hyperaware.android.firebasejetpack.activity.livepricehistory.StockPriceHistoryActivity
 import com.hyperaware.android.firebasejetpack.activity.multitracker.StockPriceTrackerActivity
+import com.hyperaware.android.firebasejetpack.activity.allstockspagedrv.AllStocksPagedRecyclerViewActivity
 import com.hyperaware.android.firebasejetpack.activity.multitrackerrv.StockPriceTrackerRecyclerViewActivity
 import com.hyperaware.android.firebasejetpack.koin.RuntimeConfig
 import com.hyperaware.android.firebasejetpack.repo.firestore.FirestoreStockRepository
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnToggleDb: Button
     private lateinit var btnTrackTwo: Button
     private lateinit var btnTrackRecyclerView: Button
+    private lateinit var btnTrackPagedRecyclerView: Button
     private lateinit var btnStockHistory: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -136,6 +138,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, StockPriceTrackerRecyclerViewActivity::class.java))
         }
 
+        btnTrackPagedRecyclerView = findViewById(R.id.btn_track_paged_recycler_view)
+        btnTrackPagedRecyclerView.setOnClickListener {
+            startActivity(Intent(this, AllStocksPagedRecyclerViewActivity::class.java))
+        }
+
         btnStockHistory = findViewById(R.id.btn_stock_history)
         btnStockHistory.setOnClickListener {
             startActivity(StockPriceHistoryActivity.newIntent(this, "HSTK"))
@@ -175,6 +182,7 @@ class MainActivity : AppCompatActivity() {
         btnLogOut.isEnabled = loggedIn
         btnTrackTwo.isEnabled = loggedIn
         btnTrackRecyclerView.isEnabled = loggedIn
+        btnTrackPagedRecyclerView.isEnabled = loggedIn
         btnStockHistory.isEnabled = loggedIn
 //        if (loggedIn) {
 //            startActivity(Intent(this, MultiTrackerRecyclerView::class.java))

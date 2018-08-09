@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hyperaware.android.firebasejetpack.activity.multitrackerrv
+package com.hyperaware.android.firebasejetpack.activity.allstockspagedrv
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -24,11 +24,11 @@ import android.support.v7.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
 import com.hyperaware.android.firebasejetpack.activity.livepricehistory.StockPriceHistoryActivity
-import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceViewModel
+import com.hyperaware.android.firebasejetpack.viewmodel.PagedStockPricesViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.android.ext.android.inject
 
-class StockPriceTrackerRecyclerViewActivity : AppCompatActivity() {
+class AllStocksPagedRecyclerViewActivity : AppCompatActivity() {
 
     private val auth by inject<FirebaseAuth>()
 
@@ -36,7 +36,7 @@ class StockPriceTrackerRecyclerViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // The model
-        val stocksViewModel = ViewModelProviders.of(this).get(StockPriceViewModel::class.java)
+        val stocksViewModel = ViewModelProviders.of(this).get(PagedStockPricesViewModel::class.java)
 
         // The root view/scaffolding
         setContentView(R.layout.activity_multi_tracker_recycler_view)
@@ -44,10 +44,10 @@ class StockPriceTrackerRecyclerViewActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.rv_stocks).apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@StockPriceTrackerRecyclerViewActivity)
-            adapter = StocksRecyclerViewAdapter(
+            layoutManager = LinearLayoutManager(this@AllStocksPagedRecyclerViewActivity)
+            adapter = StocksPagedListAdapter(
                 stocksViewModel,
-                this@StockPriceTrackerRecyclerViewActivity,
+                this@AllStocksPagedRecyclerViewActivity,
                 ItemClickListener()
             )
         }
@@ -69,10 +69,10 @@ class StockPriceTrackerRecyclerViewActivity : AppCompatActivity() {
         }
     }
 
-    private inner class ItemClickListener : StocksRecyclerViewAdapter.ItemClickListener<StockViewHolder> {
+    private inner class ItemClickListener : StocksPagedListAdapter.ItemClickListener<StockViewHolder> {
         override fun onItemClick(holder: StockViewHolder) {
             startActivity(StockPriceHistoryActivity.newIntent(
-                this@StockPriceTrackerRecyclerViewActivity,
+                this@AllStocksPagedRecyclerViewActivity,
                 holder.ticker!!)
             )
         }

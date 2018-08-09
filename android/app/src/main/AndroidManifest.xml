@@ -33,6 +33,10 @@
             android:label="@string/track_stocks_rv"/>
 
         <activity
+            android:name=".activity.allstockspagedrv.AllStocksPagedRecyclerViewActivity"
+            android:label="@string/track_stocks_rv"/>
+
+        <activity
             android:name=".activity.livepricehistory.StockPriceHistoryActivity"/>
 
         <service

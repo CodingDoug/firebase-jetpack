@@ -21,4 +21,4 @@ package com.hyperaware.android.firebasejetpack.common
  * or some exception.
  */
 
-class DataOrException<T, E: Exception?>(val data: T?, val exception: E?)
+data class DataOrException<out T, out E: Exception?>(val data: T?, val exception: E?)

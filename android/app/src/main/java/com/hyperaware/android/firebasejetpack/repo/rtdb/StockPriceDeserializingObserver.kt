@@ -27,7 +27,7 @@ import com.hyperaware.android.firebasejetpack.repo.StockPriceQueryItem
 // generify better
 internal class StockPriceDeserializingObserver(
     private val liveData: MediatorLiveData<QueryResultsOrException<StockPrice, Exception>>,
-    private val deserializer: StockLiveDataSnapshotDeserializer
+    private val deserializer: StockPriceSnapshotDeserializer
 ) : Observer<DataSnapshotOrException> {
 
     override fun onChanged(results: DataSnapshotOrException?) {

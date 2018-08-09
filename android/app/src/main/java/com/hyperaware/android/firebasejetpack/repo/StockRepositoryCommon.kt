@@ -29,11 +29,14 @@ interface QueryItem<T> {
     val id: String
 }
 
-data class StockPriceQueryItem(private val _item: StockPrice, private val _id2: String) : QueryItem<StockPrice> {
+typealias QueryItemOrException<T> = DataOrException<QueryItem<T>, Exception>
+
+
+data class StockPriceQueryItem(private val _item: StockPrice, private val _id: String) : QueryItem<StockPrice> {
     override val item: StockPrice
         get() = _item
     override val id: String
-        get() = _id2
+        get() = _id
 }
 
 typealias StockPriceOrException = DataOrException<StockPrice, Exception>

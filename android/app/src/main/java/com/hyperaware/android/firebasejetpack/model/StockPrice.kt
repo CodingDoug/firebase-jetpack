@@ -16,7 +16,7 @@
 
 package com.hyperaware.android.firebasejetpack.model
 
-import java.util.*
+import java.util.Date
 
 data class StockPrice(
     var ticker: String = "",

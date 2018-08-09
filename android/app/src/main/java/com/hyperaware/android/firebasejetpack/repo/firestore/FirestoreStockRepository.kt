@@ -18,7 +18,11 @@ package com.hyperaware.android.firebasejetpack.repo.firestore
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
-import com.google.firebase.firestore.*
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.config.AppExecutors
 import com.hyperaware.android.firebasejetpack.livedata.firestore.FirestoreDocumentLiveData
@@ -27,7 +31,8 @@ import com.hyperaware.android.firebasejetpack.model.StockPrice
 import com.hyperaware.android.firebasejetpack.repo.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import java.util.concurrent.*
+import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
 
 class FirestoreStockRepository : BaseStockRepository(), KoinComponent {
 
@@ -55,6 +60,24 @@ class FirestoreStockRepository : BaseStockRepository(), KoinComponent {
         val queryObserver = StockPriceDeserializingObserver(priceHistoryLiveData, stockPriceDeserializer)
         priceHistoryLiveData.addSource(queryLiveData, queryObserver)
         return priceHistoryLiveData
+    }
+
+    override fun getStockPricePagedListLiveData(pageSize: Int): LiveData<PagedList<QueryItemOrException<StockPrice>>> {
+        val query = stocksLiveCollection.orderBy(FieldPath.documentId())
+        val dataSourceFactory = FirestoreQueryDataSource.Factory(query, Source.DEFAULT)
+        val deserializedDataSourceFactory = dataSourceFactory.map { snapshot ->
+            try {
+                val item = StockPriceQueryItem(stockPriceDeserializer.deserialize(snapshot), snapshot.id)
+                QueryItemOrException(item, null)
+            }
+            catch (e: Exception) {
+                QueryItemOrException<StockPrice>(null, e)
+            }
+        }
+
+        return LivePagedListBuilder(deserializedDataSourceFactory, pageSize)
+            .setFetchExecutor(executors.cpuExecutorService)
+            .build()
     }
 
     override fun syncStockPrice(ticker: String, timeout: Long, unit: TimeUnit): Future<StockRepository.SyncResult> {

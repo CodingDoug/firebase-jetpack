@@ -23,7 +23,7 @@ import java.util.*
 
 internal interface DataSnapshotDeserializer<T> : Deserializer<DataSnapshot, T>
 
-internal class StockLiveDataSnapshotDeserializer : DataSnapshotDeserializer<StockPrice> {
+internal class StockPriceSnapshotDeserializer : DataSnapshotDeserializer<StockPrice> {
     override fun deserialize(input: DataSnapshot): StockPrice {
         val data = input.value
         return if (data is Map<*, *>) {

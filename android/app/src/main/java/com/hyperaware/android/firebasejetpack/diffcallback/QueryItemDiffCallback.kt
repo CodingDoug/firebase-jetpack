@@ -1,4 +1,4 @@
-package com.hyperaware.android.firebasejetpack.viewmodel
+package com.hyperaware.android.firebasejetpack.diffcallback
 
 import android.support.v7.util.DiffUtil
 import com.hyperaware.android.firebasejetpack.repo.QueryItem

@@ -17,6 +17,7 @@
 package com.hyperaware.android.firebasejetpack.viewmodel
 
 import android.annotation.SuppressLint
+import com.hyperaware.android.firebasejetpack.diffcallback.QueryItemDiffCallback
 import com.hyperaware.android.firebasejetpack.model.StockPrice
 import com.hyperaware.android.firebasejetpack.viewmodel.Formatters.priceFormatter
 import com.hyperaware.android.firebasejetpack.viewmodel.Formatters.timeFormatter
