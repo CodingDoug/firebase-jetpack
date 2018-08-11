@@ -11,15 +11,15 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@google-cloud/firestore": "^0.15.4",
+    "@google-cloud/firestore": "^0.16.0",
     "command-line-args": "^5.0.2",
-    "firebase-admin": "^5.13.1",
-    "firebase-functions": "^2.0.2",
-    "source-map-support": "^0.5.6"
+    "firebase-admin": "^6.0.0",
+    "firebase-functions": "^2.0.4",
+    "source-map-support": "^0.5.8"
   },
   "devDependencies": {
-    "tslint": "^5.10.0",
-    "typescript": "^2.9.2"
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
   },
   "private": true
 }
