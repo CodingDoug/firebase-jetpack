@@ -16,61 +16,31 @@
 
 package com.hyperaware.android.firebasejetpack.livedata.firestore
 
-import android.arch.lifecycle.LiveData
-import android.os.Handler
-import android.util.Log
 import com.google.firebase.firestore.*
+import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.config.AppExecutors
+import com.hyperaware.android.firebasejetpack.livedata.common.LingeringLiveData
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-typealias DocumentSnapshotsOrException = Pair<List<DocumentSnapshot>?, FirebaseFirestoreException?>
+typealias DocumentSnapshotsOrException = DataOrException<List<DocumentSnapshot>?, FirebaseFirestoreException?>
 
 class FirestoreQueryLiveData(private val query: Query)
-    : LiveData<DocumentSnapshotsOrException>(), EventListener<QuerySnapshot>, KoinComponent {
-
-    companion object {
-        private const val TAG = "FirestoreQueryLiveData"
-        // Listener removal is scheduled after a 2s delay of inactivity
-        private const val STOP_LISTENING_DELAY = 2000L
-    }
+    : LingeringLiveData<DocumentSnapshotsOrException>(), EventListener<QuerySnapshot>, KoinComponent {
 
     private val executors by inject<AppExecutors>()
 
-    private val handler = Handler()
-
     private var listenerRegistration: ListenerRegistration? = null
-    private var listenerRemovePending = false
-    private val removeListenerRunnable = RemoveListenerRunnable()
 
-    override fun onActive() {
-        if (listenerRemovePending) {
-            handler.removeCallbacks(removeListenerRunnable)
-        }
-        else {
-            listenerRegistration = query.addSnapshotListener(
-                executors.cpuExecutorService,
-                MetadataChanges.INCLUDE,
-                this
-            )
-        }
-        listenerRemovePending = false
+    override fun beginLingering() {
+        listenerRegistration = query.addSnapshotListener(
+            executors.cpuExecutorService,
+            MetadataChanges.INCLUDE,
+            this)
     }
 
-    override fun onInactive() {
-        handler.postDelayed(removeListenerRunnable, STOP_LISTENING_DELAY)
-        listenerRemovePending = true
-    }
-
-    private inner class RemoveListenerRunnable : Runnable {
-        override fun run() {
-            if (listenerRemovePending) {
-                Log.d(TAG, "Stop listing to query")
-                listenerRegistration?.remove()
-                listenerRegistration = null
-                listenerRemovePending = false
-            }
-        }
+    override fun endLingering() {
+        listenerRegistration?.remove()
     }
 
     override fun onEvent(snapshot: QuerySnapshot?, e: FirebaseFirestoreException?) {
