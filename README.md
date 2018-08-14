@@ -1,11 +1,17 @@
 # Firebase & Jetpack
 
 This repo contains an Android app that demonstrates an (evolving) approach to
-the use of Firebase along with some of Android's Jetpack components.
+the use of Firebase along with some of Android's [Jetpack][2] components,
+including ViewModel, LiveData, paging, data binding, and WorkManager.  Full
+implementations are provided for [Realtime Database][3] and [Firestore][4].
+
+## Live Demo
+
+You can use a fully functioning version of this app by [installing it from the Play Store][1].
 
 ## Setup
 
-Minimally, to get started
+Minimally, to get started:
 
 1. Create a Firebase project
 1. Enable Firestore and Realtime Database
@@ -44,3 +50,8 @@ limitations under the License.
 
 This is not an officially supported Google product.
 
+
+[1]: https://play.google.com/store/apps/details?id=com.hyperaware.android.firebasejetpack
+[2]: https://developer.android.com/jetpack/
+[3]: https://firebase.google.com/docs/database/
+[4]: https://firebase.google.com/docs/firestore/
