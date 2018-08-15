@@ -50,7 +50,7 @@ export class FirestoreStockRepository extends StockRepositoryBase {
         const historyColl = stockDoc.collection('recent-history')
         const historyId = stockPrice.time.getTime().toString()
         const historyDoc = historyColl.doc(historyId)
-        const p2 = historyDoc.create(stockPrice)
+        const p2 = historyDoc.set(stockPrice)
 
         const p3 = this.deleteOldHistory(historyColl)
 
