@@ -11,11 +11,11 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@google-cloud/firestore": "^0.16.0",
+    "@google-cloud/firestore": "^0.16.1",
     "command-line-args": "^5.0.2",
     "firebase-admin": "^6.0.0",
     "firebase-functions": "^2.0.5",
-    "source-map-support": "^0.5.8"
+    "source-map-support": "^0.5.9"
   },
   "devDependencies": {
     "tslint": "^5.11.0",

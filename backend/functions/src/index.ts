@@ -22,7 +22,7 @@ import { StockMachine } from './stocks/stock-machine'
 
 const PERIOD = 1500  // 1.5 seconds between ticks
 
-let machine  // lazy init
+let machine: StockMachine  // lazy init
 
 /*
  * This function implements a periodic tick system that advances the state
@@ -55,17 +55,8 @@ export const onStockMachineWrite = functions.database.ref('/machine').onWrite(as
         machine = new StockMachine(app)
     }
 
-    try {
-        await machine.onTick()
-    }
-    catch (e) {
-        console.error('Problem with machine.onTick()', e)
-    }
-
-    // If this fails, the machine stops!
+    await machine.onTick()
     await change.after.ref.child('lastTick').set(now)
-
-    return null
 })
 
 
