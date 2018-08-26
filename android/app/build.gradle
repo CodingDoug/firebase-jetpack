@@ -9,7 +9,7 @@ android {
         applicationId "com.hyperaware.android.firebasejetpack"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 2
+        versionCode 3
         versionName "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'android.arch.work:work-runtime-ktx:1.0.0-alpha06'
+    implementation 'android.arch.work:work-runtime-ktx:1.0.0-alpha07'
     implementation 'android.arch.paging:runtime:1.0.1'
 
     implementation 'com.google.firebase:firebase-core:16.0.1'
@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.3.0'
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
 
-    implementation 'org.koin:koin-android:1.0.0-beta-4'
+    implementation 'org.koin:koin-android:1.0.0-beta-7'
 }
 
 apply plugin: 'com.google.gms.google-services'
