@@ -45,6 +45,9 @@ const app = admin.initializeApp({
     databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
 })
 
+// Needed temporarily to kill the warning about timestamps
+app.firestore().settings({ timestampsInSnapshots: true })
+
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

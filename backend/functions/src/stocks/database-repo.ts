@@ -76,7 +76,7 @@ export class RealtimeDatabaseStockRepository extends StockRepositoryBase {
             snaps.push(snap.ref)
             return false
         })
-        return snaps.map(ref => ref.remove())
+        return Promise.all(snaps.map(ref => ref.remove()))
     }
 
 }

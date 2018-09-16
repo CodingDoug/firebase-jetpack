@@ -60,7 +60,7 @@ export class FirestoreStockRepository extends StockRepositoryBase {
     private async deleteOldHistory(historyColl: CollectionReference): Promise<any> {
         const expired = new Date(Date.now() - this.historyExpires)
         const snapshot = await historyColl.where('time', '<', expired).get()
-        return snapshot.docs.map(snap => snap.ref.delete())
+        return Promise.all(snapshot.docs.map(snap => snap.ref.delete()))
     }
 
 }

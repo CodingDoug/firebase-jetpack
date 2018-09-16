@@ -32,7 +32,8 @@ let machine: StockMachine  // lazy init
  * as required to delay execution of the next tick.
  */
 
-export const onStockMachineWrite = functions.database.ref('/machine').onWrite(async change => {
+export const onStockMachineWrite =
+functions.database.ref('/machine').onWrite(async (change, context) => {
     const after = change.after.val()
     if (!after) {
         console.log("/machine is empty")
@@ -44,19 +45,19 @@ export const onStockMachineWrite = functions.database.ref('/machine').onWrite(as
         return null
     }
 
-    const now = Date.now()
-    const wait = PERIOD - (now - after.lastTick)
-    if (wait > 0) {
-        await sleep(wait)
-    }
-
     if (!machine) {
         const app = initializeApp()
         machine = new StockMachine(app)
     }
 
     await machine.onTick()
-    await change.after.ref.child('lastTick').set(now)
+
+    const wait = PERIOD - (Date.now() - after.lastTick)
+    if (wait > 0) {
+        await sleep(wait)
+    }
+
+    await change.after.ref.child('lastTick').set(Date.now())
 })
 
 
