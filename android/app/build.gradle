@@ -35,14 +35,16 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'android.arch.work:work-runtime-ktx:1.0.0-alpha08'
+    implementation ('android.arch.work:work-runtime-ktx:1.0.0-alpha09') {
+        exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
     implementation 'android.arch.paging:runtime:1.0.1'
 
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-database:16.0.2'
     implementation 'com.google.firebase:firebase-firestore:17.1.0'
-    implementation 'com.google.firebase:firebase-messaging:17.3.1'
+    implementation 'com.google.firebase:firebase-messaging:17.3.2'
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
 
     implementation 'org.koin:koin-android:1.0.0-RC-1'

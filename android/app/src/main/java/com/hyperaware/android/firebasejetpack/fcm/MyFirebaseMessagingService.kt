@@ -49,7 +49,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val data: Data = mapOf("ticker" to ticker).toWorkData()
+        val data = workDataOf("ticker" to ticker)
         val workRequest = OneTimeWorkRequestBuilder<StockPriceSyncWorker>()
             .setConstraints(constraints)
             .setInputData(data)

@@ -16,8 +16,10 @@
 
 package com.hyperaware.android.firebasejetpack.worker
 
+import android.content.Context
 import android.util.Log
 import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.hyperaware.android.firebasejetpack.repo.StockRepository
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -28,7 +30,8 @@ import java.util.concurrent.TimeUnit
  * readily available offline.
  */
 
-class StockPriceSyncWorker : Worker(), KoinComponent {
+class StockPriceSyncWorker(context: Context, params: WorkerParameters)
+    : Worker(context, params), KoinComponent {
 
     companion object {
         private const val TAG = "StockSync"
