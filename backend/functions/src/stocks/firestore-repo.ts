@@ -45,16 +45,16 @@ export class FirestoreStockRepository extends StockRepositoryBase {
 
     async updateStockPrice(ticker: string, stockPrice: StockPrice): Promise<any> {
         const stockDoc = this.stocksLiveCollection.doc(ticker)
+        const historyColl = stockDoc.collection('recent-history')
+        await this.deleteOldHistory(historyColl)
+
         const p1 = stockDoc.set(stockPrice, { merge: true })
 
-        const historyColl = stockDoc.collection('recent-history')
         const historyId = stockPrice.time.getTime().toString()
         const historyDoc = historyColl.doc(historyId)
         const p2 = historyDoc.set(stockPrice)
 
-        const p3 = this.deleteOldHistory(historyColl)
-
-        return Promise.all([p1, p2, p3])
+        return Promise.all([p1, p2])
     }
 
     private async deleteOldHistory(historyColl: CollectionReference): Promise<any> {

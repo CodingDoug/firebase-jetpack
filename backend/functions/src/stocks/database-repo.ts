@@ -45,6 +45,9 @@ export class RealtimeDatabaseStockRepository extends StockRepositoryBase {
     }
 
     async updateStockPrice(ticker: string, stockPrice: StockPrice): Promise<any> {
+        const historyRef = this.stocksHistoryRef.child(ticker)
+        await this.deleteOldHistory(historyRef)
+
         const time = stockPrice.time.getTime()
         const price = {
             price: stockPrice.price,
@@ -58,13 +61,10 @@ export class RealtimeDatabaseStockRepository extends StockRepositoryBase {
         // Save stock price to history
         price['revTime'] = -time  // for reverse sorting by time
         const historyId = stockPrice.time.getTime().toString()
-        const historyRef = this.stocksHistoryRef.child(ticker)
         const newHistoryRef = historyRef.child(historyId)
         const p2 = newHistoryRef.set(price)
 
-        const p3 = this.deleteOldHistory(historyRef)
-
-        return Promise.all([p1, p2, p3])
+        return Promise.all([p1, p2])
     }
 
     private async deleteOldHistory(historyRef: database.Reference): Promise<any> {
