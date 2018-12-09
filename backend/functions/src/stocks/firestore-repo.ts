@@ -16,12 +16,11 @@
 
 import { StockRepositoryBase, StockPrice } from './repo'
 import { firestore } from 'firebase-admin'
-import { CollectionReference } from '@google-cloud/firestore'
 
 export class FirestoreStockRepository extends StockRepositoryBase {
 
     private firestore: firestore.Firestore
-    private stocksLiveCollection: CollectionReference
+    private stocksLiveCollection: firestore.CollectionReference
 
     constructor(fstore: firestore.Firestore) {
         super()
@@ -57,7 +56,7 @@ export class FirestoreStockRepository extends StockRepositoryBase {
         return Promise.all([p1, p2])
     }
 
-    private async deleteOldHistory(historyColl: CollectionReference): Promise<any> {
+    private async deleteOldHistory(historyColl: firestore.CollectionReference): Promise<any> {
         const expired = new Date(Date.now() - this.historyExpires)
         const snapshot = await historyColl.where('time', '<', expired).get()
         return Promise.all(snapshot.docs.map(snap => snap.ref.delete()))
