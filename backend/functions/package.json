@@ -12,7 +12,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "command-line-args": "^5.0.2",
-    "firebase-admin": "^6.3.0",
+    "firebase-admin": "^6.5.0",
     "firebase-functions": "^2.1.0",
     "source-map-support": "^0.5.9"
   },
