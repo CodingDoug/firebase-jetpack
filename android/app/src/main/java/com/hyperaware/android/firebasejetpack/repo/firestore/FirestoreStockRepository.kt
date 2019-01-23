@@ -20,6 +20,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
+import com.google.common.util.concurrent.ListenableFuture
+import com.google.common.util.concurrent.MoreExecutors
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
@@ -42,6 +44,8 @@ class FirestoreStockRepository : BaseStockRepository(), KoinComponent {
     private val stocksLiveCollection = firestore.collection("stocks-live")
 
     private val stockPriceDeserializer = StockPriceDocumentSnapshotDeserializer()
+
+    private val listeningExecutor = MoreExecutors.listeningDecorator(executors.networkExecutorService)
 
     override fun getStockPriceLiveData(ticker: String): LiveData<StockPriceOrException> {
         val stockDocRef = stocksLiveCollection.document(ticker)
@@ -80,10 +84,10 @@ class FirestoreStockRepository : BaseStockRepository(), KoinComponent {
             .build()
     }
 
-    override fun syncStockPrice(ticker: String, timeout: Long, unit: TimeUnit): Future<StockRepository.SyncResult> {
+    override fun syncStockPrice(ticker: String, timeout: Long, unit: TimeUnit): ListenableFuture<StockRepository.SyncResult> {
         val stockDocRef = stocksLiveCollection.document(ticker)
         val callable = DocumentSyncCallable(stockDocRef, timeout, unit)
-        return executors.networkExecutorService.submit(callable)
+        return listeningExecutor.submit(callable)
     }
 
 }

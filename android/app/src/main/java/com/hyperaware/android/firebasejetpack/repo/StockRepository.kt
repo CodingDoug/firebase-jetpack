@@ -18,10 +18,9 @@ package com.hyperaware.android.firebasejetpack.repo
 
 import android.arch.lifecycle.LiveData
 import android.arch.paging.PagedList
-import com.hyperaware.android.firebasejetpack.common.DataOrException
+import com.google.common.util.concurrent.ListenableFuture
 import com.hyperaware.android.firebasejetpack.model.StockPrice
 import java.util.*
-import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 interface StockRepository {
@@ -41,7 +40,7 @@ interface StockRepository {
     /**
      * Synchronizes one stock record so it's available to this repo while offline
      */
-    fun syncStockPrice(ticker: String, timeout: Long, unit: TimeUnit): Future<SyncResult>
+    fun syncStockPrice(ticker: String, timeout: Long, unit: TimeUnit): ListenableFuture<SyncResult>
 
 
     enum class SyncResult {

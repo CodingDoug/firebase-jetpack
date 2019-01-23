@@ -14,50 +14,57 @@
  * limitations under the License.
  */
 
+@file:Suppress("UnstableApiUsage")
+
 package com.hyperaware.android.firebasejetpack.worker
 
 import android.content.Context
 import android.util.Log
-import androidx.work.Worker
+import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
+import com.google.common.base.Function
+import com.google.common.util.concurrent.Futures
+import com.google.common.util.concurrent.ListenableFuture
+import com.google.common.util.concurrent.SettableFuture
+import com.hyperaware.android.firebasejetpack.config.AppExecutors
 import com.hyperaware.android.firebasejetpack.repo.StockRepository
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.concurrent.TimeUnit
 
-/**
- * WorkManager Worker that synchronizes one stock price record, so it's
- * readily available offline.
- */
-
 class StockPriceSyncWorker(context: Context, params: WorkerParameters)
-    : Worker(context, params), KoinComponent {
+    : ListenableWorker(context, params), KoinComponent {
 
     companion object {
         private const val TAG = "StockSync"
+
+        // Take a sync result and convert it to an appropriate WorkManager result
+        private val convertResult = Function<StockRepository.SyncResult, Result> { syncResult ->
+            when (syncResult) {
+                StockRepository.SyncResult.SUCCESS -> Result.success()
+                StockRepository.SyncResult.UNKNOWN -> Result.success()
+                StockRepository.SyncResult.FAILURE -> Result.failure()
+                StockRepository.SyncResult.TIMEOUT -> Result.retry()
+                else -> Result.failure()
+            }
+        }
     }
 
     private val repo by inject<StockRepository>()
+    private val executors by inject<AppExecutors>()
 
-    override fun doWork(): Result {
-        val ticker = inputData.getString("ticker") ?: return Result.FAILURE
+    override fun startWork(): ListenableFuture<Result> {
+        val ticker = inputData.getString("ticker")
+        if (ticker == null) {
+            Log.e(TAG, "No ticker given to synchronize")
+            val future = SettableFuture.create<Result>()
+            future.set(Result.failure())
+            return future
+        }
+
         Log.d(TAG, "Synchronizing $ticker")
-
-        val sync = repo.syncStockPrice(ticker, 5, TimeUnit.SECONDS)
-        return try {
-            val result = sync.get()
-            return when (result) {
-                StockRepository.SyncResult.SUCCESS -> Result.SUCCESS
-                StockRepository.SyncResult.UNKNOWN -> Result.SUCCESS
-                StockRepository.SyncResult.FAILURE -> Result.FAILURE
-                StockRepository.SyncResult.TIMEOUT -> Result.RETRY
-                else -> Result.FAILURE
-            }
-        }
-        catch (e: Exception) {
-            Log.e(TAG, "Error synchronizing $ticker", e)
-            Result.FAILURE
-        }
+        val syncFuture = repo.syncStockPrice(ticker, 5, TimeUnit.SECONDS)
+        return Futures.transform(syncFuture, convertResult, executors.cpuExecutorService)
     }
 
 }

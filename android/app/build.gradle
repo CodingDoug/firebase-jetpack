@@ -39,9 +39,7 @@ dependencies {
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'android.arch.paging:runtime:1.0.1'
-    implementation ('android.arch.work:work-runtime-ktx:1.0.0-alpha11') {
-        exclude group: 'com.google.guava', module: 'listenablefuture'
-    }
+    implementation 'android.arch.work:work-runtime-ktx:1.0.0-beta02'
 
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
