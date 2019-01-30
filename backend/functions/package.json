@@ -11,7 +11,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "firebase-admin": "^6.5.0",
+    "firebase-admin": "^6.5.1",
     "firebase-functions": "^2.1.0",
     "source-map-support": "^0.5.10"
   },
