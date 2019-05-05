@@ -18,9 +18,9 @@ package com.hyperaware.android.firebasejetpack.repo.firestore
 
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Observer
+import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.config.AppExecutors
 import com.hyperaware.android.firebasejetpack.livedata.firestore.DocumentSnapshotOrException
-import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.repo.Deserializer
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -37,8 +37,8 @@ internal class DeserializingDocumentSnapshotObserver<T>(
             val snapshot = result.data
             val exception = result.exception
             if (snapshot != null) {
-                // Do this in a thread because DataSnapshot
-                // deserialization with reflection can be costly.
+                // Do this in a thread when DataSnapshot deserialization
+                // could be costly (e.g. using reflection).
                 executors.cpuExecutorService.execute {
                     try {
                         val value = deserializer.deserialize(snapshot)

@@ -19,8 +19,7 @@ package com.hyperaware.android.firebasejetpack.model
 import java.util.Date
 
 data class StockPrice(
-    var ticker: String = "",
-    var price: Float = 0.0f,
-    var time: Date? = null,
-    var exists: Boolean = false
+    val ticker: String,
+    val price: Float,
+    val time: Date
 )

@@ -27,15 +27,30 @@ internal class StockPriceSnapshotDeserializer : DataSnapshotDeserializer<StockPr
     override fun deserialize(input: DataSnapshot): StockPrice {
         val data = input.value
         return if (data is Map<*, *>) {
-            StockPrice(
-                input.key!!,
-                (data["price"] as Number).toFloat(),
-                Date(data["time"] as Long),
-                true
-            )
+            val ticker = input.key!!
+
+            val price = data["price"] ?:
+                throw Deserializer.DeserializerException("price was missing for stock price snapshot $ticker")
+            val priceFloat = if (price is Number) {
+                price.toFloat()
+            }
+            else {
+                throw Deserializer.DeserializerException("price not a float for stock price snapshot $ticker")
+            }
+
+            val time = data["time"] ?:
+                throw Deserializer.DeserializerException("time was missing for stock price snapshot $ticker")
+            val timeDate = if (time is Number) {
+                Date(time.toLong())
+            }
+            else {
+                throw Deserializer.DeserializerException("time not a number for stock price snapshot $ticker")
+            }
+
+            StockPrice(ticker, priceFloat, timeDate)
         }
         else {
-            throw Deserializer.DeserializerException("input.value wasn't a Map")
+            throw Deserializer.DeserializerException("DataSnapshot value wasn't an object Map")
         }
     }
 }

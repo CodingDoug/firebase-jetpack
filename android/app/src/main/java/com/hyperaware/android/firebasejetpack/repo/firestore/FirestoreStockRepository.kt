@@ -18,6 +18,7 @@ package com.hyperaware.android.firebasejetpack.repo.firestore
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.Transformations
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import com.google.common.util.concurrent.ListenableFuture
@@ -25,7 +26,6 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
-import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.config.AppExecutors
 import com.hyperaware.android.firebasejetpack.livedata.firestore.FirestoreDocumentLiveData
 import com.hyperaware.android.firebasejetpack.livedata.firestore.FirestoreQueryLiveData
@@ -33,7 +33,6 @@ import com.hyperaware.android.firebasejetpack.model.StockPrice
 import com.hyperaware.android.firebasejetpack.repo.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 class FirestoreStockRepository : BaseStockRepository(), KoinComponent {
@@ -50,10 +49,11 @@ class FirestoreStockRepository : BaseStockRepository(), KoinComponent {
     override fun getStockPriceLiveData(ticker: String): LiveData<StockPriceOrException> {
         val stockDocRef = stocksLiveCollection.document(ticker)
         val documentLiveData = FirestoreDocumentLiveData(stockDocRef)
-        val stockPriceLiveData = MediatorLiveData<DataOrException<StockPrice, Exception>>()
-        val snapshotObserver = DeserializingDocumentSnapshotObserver(stockPriceDeserializer, stockPriceLiveData)
-        stockPriceLiveData.addSource(documentLiveData, snapshotObserver)
-        return stockPriceLiveData
+        return Transformations.map(documentLiveData, DeserializingDocumentSnapshotTransform(stockPriceDeserializer))
+//        val stockPriceLiveData = MediatorLiveData<DataOrException<StockPrice, Exception>>()
+//        val snapshotObserver = DeserializingDocumentSnapshotObserver(stockPriceDeserializer, stockPriceLiveData)
+//        stockPriceLiveData.addSource(documentLiveData, snapshotObserver)
+//        return stockPriceLiveData
     }
 
     override fun getStockPriceHistoryLiveData(ticker: String): LiveData<StockPriceHistoryQueryResults> {
@@ -80,7 +80,7 @@ class FirestoreStockRepository : BaseStockRepository(), KoinComponent {
         }
 
         return LivePagedListBuilder(deserializedDataSourceFactory, pageSize)
-            .setFetchExecutor(executors.cpuExecutorService)
+            .setFetchExecutor(executors.networkExecutorService)
             .build()
     }
 

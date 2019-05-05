@@ -24,14 +24,12 @@ internal interface DocumentSnapshotDeserializer<T> : Deserializer<DocumentSnapsh
 
 internal class StockPriceDocumentSnapshotDeserializer : DocumentSnapshotDeserializer<StockPrice> {
     override fun deserialize(input: DocumentSnapshot): StockPrice {
-        val stockPrice = input.toObject<StockPrice>(StockPrice::class.java)
-        if (stockPrice != null) {
-            stockPrice.ticker = input.id
-            stockPrice.exists = true
-            return stockPrice
-        }
-        else {
-            throw Deserializer.DeserializerException("DocumentSnapshot.toObject() returned null")
-        }
+        val ticker = input.id
+        val price = input.getDouble("price") ?:
+            throw Deserializer.DeserializerException("price was missing for stock price document $ticker")
+        val time = input.getDate("time") ?:
+            throw Deserializer.DeserializerException("time was missing for stock price document $ticker")
+
+        return StockPrice(ticker, price.toFloat(), time)
     }
 }
