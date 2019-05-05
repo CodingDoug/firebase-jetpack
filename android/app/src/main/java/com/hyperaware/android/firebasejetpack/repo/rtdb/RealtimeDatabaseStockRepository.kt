@@ -17,20 +17,18 @@
 package com.hyperaware.android.firebasejetpack.repo.rtdb
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.Transformations
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.google.firebase.database.FirebaseDatabase
-import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.config.AppExecutors
 import com.hyperaware.android.firebasejetpack.livedata.rtdb.RealtimeDatabaseQueryLiveData
 import com.hyperaware.android.firebasejetpack.model.StockPrice
 import com.hyperaware.android.firebasejetpack.repo.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 class RealtimeDatabaseStockRepository : BaseStockRepository(), KoinComponent {
@@ -47,21 +45,15 @@ class RealtimeDatabaseStockRepository : BaseStockRepository(), KoinComponent {
 
     override fun getStockPriceLiveData(ticker: String): LiveData<StockPriceOrException> {
         val stockRef = stocksLiveRef.child(ticker)
-        val databaseLiveData = RealtimeDatabaseQueryLiveData(stockRef)
-        val stockLiveData = MediatorLiveData<DataOrException<StockPrice, Exception>>()
-        val observer = DeserializingDataSnapshotObserver(stockPriceDeserializer, stockLiveData)
-        stockLiveData.addSource(databaseLiveData, observer)
-        return stockLiveData
+        val liveData = RealtimeDatabaseQueryLiveData(stockRef)
+        return Transformations.map(liveData, DeserializeDataSnapshotTransform(stockPriceDeserializer))
     }
 
     override fun getStockPriceHistoryLiveData(ticker: String): LiveData<StockPriceHistoryQueryResults> {
         val stockHistoryRef = stocksHistoryRef.child(ticker)
         val query = stockHistoryRef.orderByChild("time")
-        val queryLiveData = RealtimeDatabaseQueryLiveData(query)
-        val stockHistoryLiveData = MediatorLiveData<StockPriceHistoryQueryResults>()
-        val observer = StockPriceDeserializingObserver(stockHistoryLiveData, stockPriceDeserializer)
-        stockHistoryLiveData.addSource(queryLiveData, observer)
-        return stockHistoryLiveData
+        val liveData = RealtimeDatabaseQueryLiveData(query)
+        return Transformations.map(liveData, DeserializeQuerySnapshotTransform(stockPriceDeserializer))
     }
 
     override fun getStockPricePagedListLiveData(pageSize: Int): LiveData<PagedList<QueryItemOrException<StockPrice>>> {

@@ -41,6 +41,9 @@ class FirestoreDocumentLiveData(private val ref: DocumentReference)
     }
 
     override fun onEvent(snapshot: DocumentSnapshot?, e: FirebaseFirestoreException?) {
+        // Using postValue instead of setValue here, since Firestore events can be
+        // configured to be received on any executor.
+        //
         if (snapshot != null) {
             postValue(DocumentSnapshotOrException(snapshot, null))
         }

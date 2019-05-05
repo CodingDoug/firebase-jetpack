@@ -21,13 +21,12 @@ import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.livedata.firestore.DocumentSnapshotOrException
 import com.hyperaware.android.firebasejetpack.repo.Deserializer
 
-internal class DeserializingDocumentSnapshotTransform<T>(
+internal class DeserializeDocumentSnapshotTransform<T>(
     private val deserializer: DocumentSnapshotDeserializer<T>
-) : Function<DocumentSnapshotOrException, DataOrException<T,Exception>> {
+) : Function<DocumentSnapshotOrException, DataOrException<T, Exception>> {
 
-    override fun apply(result: DocumentSnapshotOrException): DataOrException<T, java.lang.Exception> {
-        val snapshot = result.data
-        val exception = result.exception
+    override fun apply(input: DocumentSnapshotOrException): DataOrException<T, Exception> {
+        val (snapshot, exception) = input
         return when {
             snapshot != null -> try {
                 val data = deserializer.deserialize(snapshot)

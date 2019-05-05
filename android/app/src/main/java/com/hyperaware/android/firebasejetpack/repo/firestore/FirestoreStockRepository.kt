@@ -17,7 +17,6 @@
 package com.hyperaware.android.firebasejetpack.repo.firestore
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
@@ -48,22 +47,26 @@ class FirestoreStockRepository : BaseStockRepository(), KoinComponent {
 
     override fun getStockPriceLiveData(ticker: String): LiveData<StockPriceOrException> {
         val stockDocRef = stocksLiveCollection.document(ticker)
+
+        // This LiveData is going to emit DocumentSnapshot objects.  We need
+        // to transform those into StockPrice objects for the consumer.
         val documentLiveData = FirestoreDocumentLiveData(stockDocRef)
-        return Transformations.map(documentLiveData, DeserializingDocumentSnapshotTransform(stockPriceDeserializer))
-//        val stockPriceLiveData = MediatorLiveData<DataOrException<StockPrice, Exception>>()
-//        val snapshotObserver = DeserializingDocumentSnapshotObserver(stockPriceDeserializer, stockPriceLiveData)
-//        stockPriceLiveData.addSource(documentLiveData, snapshotObserver)
-//        return stockPriceLiveData
+
+        // When a transformation is fast and can be executed on the main
+        // thread, we can use Transformations.map().
+        return Transformations.map(documentLiveData, DeserializeDocumentSnapshotTransform(stockPriceDeserializer))
+
+        // But if a transformation is slow/blocking and shouldn't be executed
+        // on the main thread, we can use Transformations.switchMap() with a
+        // function that transforms on another thread and returns a LiveData.
+//        return Transformations.switchMap(documentLiveData, AsyncDeserializingDocumentSnapshotTransform(stockPriceDeserializer))
     }
 
     override fun getStockPriceHistoryLiveData(ticker: String): LiveData<StockPriceHistoryQueryResults> {
         val priceHistoryColl = stocksLiveCollection.document(ticker).collection("recent-history")
         val query = priceHistoryColl.orderBy("time")
         val queryLiveData = FirestoreQueryLiveData(query)
-        val priceHistoryLiveData = MediatorLiveData<StockPriceHistoryQueryResults>()
-        val queryObserver = StockPriceDeserializingObserver(priceHistoryLiveData, stockPriceDeserializer)
-        priceHistoryLiveData.addSource(queryLiveData, queryObserver)
-        return priceHistoryLiveData
+        return Transformations.map(queryLiveData, DeserializeDocumentSnapshotsTransform(stockPriceDeserializer))
     }
 
     override fun getStockPricePagedListLiveData(pageSize: Int): LiveData<PagedList<QueryItemOrException<StockPrice>>> {
