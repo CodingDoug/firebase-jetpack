@@ -16,14 +16,14 @@
 
 package com.hyperaware.android.firebasejetpack.activity.livepricehistory
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
@@ -60,7 +60,7 @@ class StockPriceHistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_price_history)
         toolbar.title = "$ticker Recent History"
 
-        findViewById<RecyclerView>(R.id.rv_price_history).apply {
+        findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_price_history).apply {
             setHasFixedSize(true)
             layoutManager = MyLinearLayoutManager(this@StockPriceHistoryActivity)
 
@@ -107,10 +107,10 @@ class StockPriceHistoryActivity : AppCompatActivity() {
 }
 
 
-private class MyLinearLayoutManager(private val context: Context) : LinearLayoutManager(context) {
+private class MyLinearLayoutManager(private val context: Context) : androidx.recyclerview.widget.LinearLayoutManager(context) {
 
     // Force new items appear at the top
-    override fun onItemsAdded(recyclerView: RecyclerView, positionStart: Int, itemCount: Int) {
+    override fun onItemsAdded(recyclerView: androidx.recyclerview.widget.RecyclerView, positionStart: Int, itemCount: Int) {
         super.onItemsAdded(recyclerView, positionStart, itemCount)
         scrollToPosition(0)
     }

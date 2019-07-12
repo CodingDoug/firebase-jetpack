@@ -1,8 +1,8 @@
 package com.hyperaware.android.firebasejetpack.livedata.common
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import android.os.Handler
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
 import android.util.Log
 
 /**

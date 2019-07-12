@@ -17,7 +17,7 @@
 package com.hyperaware.android.firebasejetpack.diffcallback
 
 import android.annotation.SuppressLint
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.hyperaware.android.firebasejetpack.repo.QueryItemOrException
 
 /**

@@ -16,8 +16,8 @@
 
 package com.hyperaware.android.firebasejetpack.activity.livepricehistory
 
-import android.arch.lifecycle.*
-import android.support.v7.widget.RecyclerView
+import androidx.lifecycle.*
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -35,7 +35,7 @@ import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplayHistory
 internal class StockPriceHistoryRecyclerViewAdapter(
     private val liveData: LiveData<StockPriceDisplayHistoryQueryResults>,
     private val lifecycleOwner: LifecycleOwner
-) : RecyclerView.Adapter<HistoricalPriceViewHolder>(), LifecycleObserver {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<HistoricalPriceViewHolder>(), LifecycleObserver {
 
     companion object {
         private const val TAG = "StockPriceHistRVAdapter"
@@ -43,7 +43,7 @@ internal class StockPriceHistoryRecyclerViewAdapter(
 
     private var history: List<QueryItem<StockPriceDisplay>>? = null
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         lifecycleOwner.lifecycle.addObserver(this)
     }

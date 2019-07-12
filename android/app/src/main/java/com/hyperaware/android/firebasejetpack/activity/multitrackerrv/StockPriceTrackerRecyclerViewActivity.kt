@@ -16,11 +16,11 @@
 
 package com.hyperaware.android.firebasejetpack.activity.multitrackerrv
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
 import com.hyperaware.android.firebasejetpack.activity.livepricehistory.StockPriceHistoryActivity
@@ -42,9 +42,9 @@ class StockPriceTrackerRecyclerViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_multi_tracker_recycler_view)
         toolbar.setTitle(R.string.track_stocks_rv)
 
-        findViewById<RecyclerView>(R.id.rv_stocks).apply {
+        findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_stocks).apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@StockPriceTrackerRecyclerViewActivity)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@StockPriceTrackerRecyclerViewActivity)
             adapter = StocksRecyclerViewAdapter(
                 stocksViewModel,
                 this@StockPriceTrackerRecyclerViewActivity,

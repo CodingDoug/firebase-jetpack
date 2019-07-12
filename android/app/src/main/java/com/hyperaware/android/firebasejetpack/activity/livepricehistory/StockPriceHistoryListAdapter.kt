@@ -1,7 +1,7 @@
 package com.hyperaware.android.firebasejetpack.activity.livepricehistory
 
-import android.support.v7.recyclerview.extensions.AsyncDifferConfig
-import android.support.v7.recyclerview.extensions.ListAdapter
+import androidx.recyclerview.widget.AsyncDifferConfig
+import androidx.recyclerview.widget.ListAdapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.hyperaware.android.firebasejetpack.config.AppExecutors

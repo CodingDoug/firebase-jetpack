@@ -16,9 +16,9 @@
 
 package com.hyperaware.android.firebasejetpack.activity.multitrackerrv
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
-import android.support.v7.widget.RecyclerView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -30,7 +30,7 @@ internal class StocksRecyclerViewAdapter(
     private val stockPriceViewModel: StockPriceViewModel,
     private val lifecycleOwner: LifecycleOwner,
     private val itemClickListener: ItemClickListener<StockViewHolder>
-) : RecyclerView.Adapter<StockViewHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<StockViewHolder>() {
 
     companion object {
         private const val TAG = "StocksRVAdapter"

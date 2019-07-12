@@ -16,8 +16,8 @@
 
 package com.hyperaware.android.firebasejetpack.activity.livepricehistory
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.hyperaware.android.firebasejetpack.databinding.HistoricalPriceListItemBinding
 
 internal class HistoricalPriceViewHolder(val binding: HistoricalPriceListItemBinding)
-    : RecyclerView.ViewHolder(binding.root)
+    : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)

@@ -16,7 +16,7 @@
 
 package com.hyperaware.android.firebasejetpack.livedata.tasks
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task

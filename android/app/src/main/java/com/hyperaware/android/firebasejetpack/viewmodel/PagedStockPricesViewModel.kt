@@ -16,10 +16,10 @@
 
 package com.hyperaware.android.firebasejetpack.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.paging.PagedList
-import android.support.annotation.MainThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
+import androidx.annotation.MainThread
 import com.hyperaware.android.firebasejetpack.model.StockPrice
 import com.hyperaware.android.firebasejetpack.repo.QueryItemOrException
 import com.hyperaware.android.firebasejetpack.repo.StockRepository

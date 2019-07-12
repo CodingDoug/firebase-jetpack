@@ -16,9 +16,9 @@
 
 package com.hyperaware.android.firebasejetpack.repo.firestore
 
-import android.arch.core.util.Function
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.arch.core.util.Function
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.config.AppExecutors
 import com.hyperaware.android.firebasejetpack.livedata.firestore.DocumentSnapshotOrException

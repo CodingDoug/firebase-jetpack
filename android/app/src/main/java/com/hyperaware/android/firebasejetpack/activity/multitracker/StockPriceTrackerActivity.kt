@@ -16,11 +16,11 @@
 
 package com.hyperaware.android.firebasejetpack.activity.multitracker
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth

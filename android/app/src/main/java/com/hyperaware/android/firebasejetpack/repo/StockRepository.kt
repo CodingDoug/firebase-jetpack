@@ -16,8 +16,8 @@
 
 package com.hyperaware.android.firebasejetpack.repo
 
-import android.arch.lifecycle.LiveData
-import android.arch.paging.PagedList
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 import com.google.common.util.concurrent.ListenableFuture
 import com.hyperaware.android.firebasejetpack.model.StockPrice
 import java.util.*

@@ -16,10 +16,10 @@
 
 package com.hyperaware.android.firebasejetpack.repo.firestore
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Transformations
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.google.firebase.firestore.FieldPath

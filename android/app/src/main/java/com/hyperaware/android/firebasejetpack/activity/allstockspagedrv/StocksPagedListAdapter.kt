@@ -16,9 +16,9 @@
 
 package com.hyperaware.android.firebasejetpack.activity.allstockspagedrv
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
-import android.arch.paging.PagedListAdapter
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.paging.PagedListAdapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.hyperaware.android.firebasejetpack.databinding.StockPriceListItemBinding

@@ -16,7 +16,7 @@
 
 package com.hyperaware.android.firebasejetpack.repo.firestore
 
-import android.arch.core.util.Function
+import androidx.arch.core.util.Function
 import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.livedata.firestore.DocumentSnapshotOrException
 import com.hyperaware.android.firebasejetpack.repo.Deserializer

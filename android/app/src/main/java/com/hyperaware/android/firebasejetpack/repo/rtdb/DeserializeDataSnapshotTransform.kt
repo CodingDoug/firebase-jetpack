@@ -16,7 +16,7 @@
 
 package com.hyperaware.android.firebasejetpack.repo.rtdb
 
-import android.arch.core.util.Function
+import androidx.arch.core.util.Function
 import com.hyperaware.android.firebasejetpack.common.DataOrException
 import com.hyperaware.android.firebasejetpack.livedata.rtdb.DataSnapshotOrException
 import com.hyperaware.android.firebasejetpack.repo.Deserializer

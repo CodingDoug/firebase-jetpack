@@ -16,15 +16,15 @@
 
 package com.hyperaware.android.firebasejetpack.activity.allstockspagedrv
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.support.v7.widget.RecyclerView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.hyperaware.android.firebasejetpack.databinding.StockPriceListItemBinding
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplayOrException
 
 internal class StockViewHolder(val binding: StockPriceListItemBinding)
-    : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {
         binding.root.setOnClickListener(this)

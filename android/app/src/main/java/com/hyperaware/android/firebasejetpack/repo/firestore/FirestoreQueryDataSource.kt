@@ -16,10 +16,10 @@
 
 package com.hyperaware.android.firebasejetpack.repo.firestore
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.paging.DataSource
-import android.arch.paging.PageKeyedDataSource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
+import androidx.paging.PageKeyedDataSource
 import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
