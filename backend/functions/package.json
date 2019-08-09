@@ -12,9 +12,9 @@
   "main": "lib/index.js",
   "dependencies": {
     "command-line-args": "^5.1.1",
-    "firebase-admin": "^8.2.0",
-    "firebase-functions": "^3.1.0",
-    "source-map-support": "^0.5.12"
+    "firebase-admin": "^8.3.0",
+    "firebase-functions": "^3.2.0",
+    "source-map-support": "^0.5.13"
   },
   "devDependencies": {
     "tslint": "^5.18.0",
