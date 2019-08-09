@@ -35,7 +35,7 @@ import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplayHistory
 internal class StockPriceHistoryRecyclerViewAdapter(
     private val liveData: LiveData<StockPriceDisplayHistoryQueryResults>,
     private val lifecycleOwner: LifecycleOwner
-) : androidx.recyclerview.widget.RecyclerView.Adapter<HistoricalPriceViewHolder>(), LifecycleObserver {
+) : RecyclerView.Adapter<HistoricalPriceViewHolder>(), LifecycleObserver {
 
     companion object {
         private const val TAG = "StockPriceHistRVAdapter"
@@ -43,7 +43,7 @@ internal class StockPriceHistoryRecyclerViewAdapter(
 
     private var history: List<QueryItem<StockPriceDisplay>>? = null
 
-    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         lifecycleOwner.lifecycle.addObserver(this)
     }

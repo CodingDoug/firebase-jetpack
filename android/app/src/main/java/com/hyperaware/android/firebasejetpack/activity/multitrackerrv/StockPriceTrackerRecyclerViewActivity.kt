@@ -42,9 +42,9 @@ class StockPriceTrackerRecyclerViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_multi_tracker_recycler_view)
         toolbar.setTitle(R.string.track_stocks_rv)
 
-        findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_stocks).apply {
+        findViewById<RecyclerView>(R.id.rv_stocks).apply {
             setHasFixedSize(true)
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@StockPriceTrackerRecyclerViewActivity)
+            layoutManager = LinearLayoutManager(this@StockPriceTrackerRecyclerViewActivity)
             adapter = StocksRecyclerViewAdapter(
                 stocksViewModel,
                 this@StockPriceTrackerRecyclerViewActivity,

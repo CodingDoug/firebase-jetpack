@@ -40,7 +40,7 @@ class StockPriceHistoryActivity : AppCompatActivity() {
 
         fun newIntent(context: Context, ticker: String): Intent {
             val intent = Intent(context, StockPriceHistoryActivity::class.java)
-            intent.putExtra(StockPriceHistoryActivity.EXTRA_TICKER, ticker)
+            intent.putExtra(EXTRA_TICKER, ticker)
             return intent
         }
     }
@@ -60,7 +60,7 @@ class StockPriceHistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_price_history)
         toolbar.title = "$ticker Recent History"
 
-        findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_price_history).apply {
+        findViewById<RecyclerView>(R.id.rv_price_history).apply {
             setHasFixedSize(true)
             layoutManager = MyLinearLayoutManager(this@StockPriceHistoryActivity)
 
@@ -107,10 +107,10 @@ class StockPriceHistoryActivity : AppCompatActivity() {
 }
 
 
-private class MyLinearLayoutManager(private val context: Context) : androidx.recyclerview.widget.LinearLayoutManager(context) {
+private class MyLinearLayoutManager(private val context: Context) : LinearLayoutManager(context) {
 
     // Force new items appear at the top
-    override fun onItemsAdded(recyclerView: androidx.recyclerview.widget.RecyclerView, positionStart: Int, itemCount: Int) {
+    override fun onItemsAdded(recyclerView: RecyclerView, positionStart: Int, itemCount: Int) {
         super.onItemsAdded(recyclerView, positionStart, itemCount)
         scrollToPosition(0)
     }
