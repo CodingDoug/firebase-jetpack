@@ -29,7 +29,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         private const val TAG = "MessagingService"
     }
 
-    override fun onNewToken(token: String?) {
+    override fun onNewToken(token: String) {
         Log.d(TAG, "FCM token: $token")
         // TODO do this proper with auth and stuff
         FirebaseMessaging.getInstance().subscribeToTopic("HSTK")
@@ -55,7 +55,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setInputData(data)
             .build()
 
-        WorkManager.getInstance()
+        WorkManager.getInstance(this)
             .beginUniqueWork("sync_$ticker", ExistingWorkPolicy.REPLACE, workRequest)
             .enqueue()
     }
