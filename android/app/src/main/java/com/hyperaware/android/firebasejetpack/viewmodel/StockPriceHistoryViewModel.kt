@@ -43,7 +43,7 @@ class StockPriceHistoryViewModel : ViewModel(), KoinComponent {
                 StockPriceDisplayHistoryQueryResults(convertedResults, exception)
             }
         }
-        return liveData!!
+        return liveData
     }
 
 }

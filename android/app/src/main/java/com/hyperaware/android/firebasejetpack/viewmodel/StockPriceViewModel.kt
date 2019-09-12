@@ -43,7 +43,7 @@ class StockPriceViewModel : ViewModel(), KoinComponent {
             }
             stockPricesLiveData[ticker] = liveData
         }
-        return liveData!!
+        return liveData
     }
 
     val allTickers = stockRepo.allTickers
