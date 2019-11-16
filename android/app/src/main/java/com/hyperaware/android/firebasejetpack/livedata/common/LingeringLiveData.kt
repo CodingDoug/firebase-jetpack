@@ -3,7 +3,6 @@ package com.hyperaware.android.firebasejetpack.livedata.common
 import androidx.lifecycle.LiveData
 import android.os.Handler
 import androidx.annotation.CallSuper
-import android.util.Log
 
 /**
  * A LiveData that allows its resource management to follow its active state,

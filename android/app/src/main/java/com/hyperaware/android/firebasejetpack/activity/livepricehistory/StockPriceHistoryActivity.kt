@@ -107,7 +107,7 @@ class StockPriceHistoryActivity : AppCompatActivity() {
 }
 
 
-private class MyLinearLayoutManager(private val context: Context) : LinearLayoutManager(context) {
+private class MyLinearLayoutManager(val context: Context) : LinearLayoutManager(context) {
 
     // Force new items appear at the top
     override fun onItemsAdded(recyclerView: RecyclerView, positionStart: Int, itemCount: Int) {

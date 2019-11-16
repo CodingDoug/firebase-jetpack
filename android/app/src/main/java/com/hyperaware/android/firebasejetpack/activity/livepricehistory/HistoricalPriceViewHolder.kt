@@ -20,4 +20,4 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hyperaware.android.firebasejetpack.databinding.HistoricalPriceListItemBinding
 
 internal class HistoricalPriceViewHolder(val binding: HistoricalPriceListItemBinding)
-    : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
+    : RecyclerView.ViewHolder(binding.root)

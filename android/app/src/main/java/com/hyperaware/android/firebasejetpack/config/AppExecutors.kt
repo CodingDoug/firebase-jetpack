@@ -21,6 +21,7 @@ import android.os.Looper
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.math.max
 
 /**
  * Shared executors for use throughout the app by way of dependency injection.
@@ -30,7 +31,7 @@ class AppExecutors internal constructor() {
 
     companion object {
         private const val NUM_NETWORK_THREADS = 3
-        private val NUM_CPU_THREADS = Math.max(1, Runtime.getRuntime().availableProcessors() - 1)
+        private val NUM_CPU_THREADS = max(1, Runtime.getRuntime().availableProcessors() - 1)
         val instance: AppExecutors by lazy { AppExecutors() }
     }
 

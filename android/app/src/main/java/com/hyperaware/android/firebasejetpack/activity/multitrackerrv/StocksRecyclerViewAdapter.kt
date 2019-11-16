@@ -30,7 +30,7 @@ internal class StocksRecyclerViewAdapter(
     private val stockPriceViewModel: StockPriceViewModel,
     private val lifecycleOwner: LifecycleOwner,
     private val itemClickListener: ItemClickListener<StockViewHolder>
-) : androidx.recyclerview.widget.RecyclerView.Adapter<StockViewHolder>() {
+) : RecyclerView.Adapter<StockViewHolder>() {
 
     companion object {
         private const val TAG = "StocksRVAdapter"

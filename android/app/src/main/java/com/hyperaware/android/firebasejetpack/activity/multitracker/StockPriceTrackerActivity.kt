@@ -18,7 +18,6 @@ package com.hyperaware.android.firebasejetpack.activity.multitracker
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log

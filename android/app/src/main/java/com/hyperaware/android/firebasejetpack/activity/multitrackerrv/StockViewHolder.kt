@@ -24,7 +24,7 @@ import com.hyperaware.android.firebasejetpack.databinding.StockPriceListItemBind
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplayOrException
 
 internal class StockViewHolder(val binding: StockPriceListItemBinding)
-    : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {
         binding.root.setOnClickListener(this)

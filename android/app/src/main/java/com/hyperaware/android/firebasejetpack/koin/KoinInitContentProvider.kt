@@ -41,23 +41,23 @@ class KoinInitContentProvider : ContentProvider() {
         return true
     }
 
-    override fun insert(uri: Uri?, values: ContentValues?): Uri? {
+    override fun insert(p0: Uri, values: ContentValues?): Uri? {
         return null
     }
 
-    override fun query(uri: Uri?, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor? {
+    override fun query(p0: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor? {
         return null
     }
 
-    override fun update(uri: Uri?, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
+    override fun update(p0: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
         return 0
     }
 
-    override fun delete(uri: Uri?, selection: String?, selectionArgs: Array<out String>?): Int {
+    override fun delete(p0: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
         return 0
     }
 
-    override fun getType(uri: Uri?): String? {
+    override fun getType(p0: Uri): String? {
         return null
     }
 
