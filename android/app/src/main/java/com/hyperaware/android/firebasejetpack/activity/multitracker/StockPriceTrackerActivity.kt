@@ -16,12 +16,12 @@
 
 package com.hyperaware.android.firebasejetpack.activity.multitracker
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
 import com.hyperaware.android.firebasejetpack.activity.livepricehistory.StockPriceHistoryActivity
@@ -49,7 +49,7 @@ class StockPriceTrackerActivity : AppCompatActivity() {
         val container = findViewById<ViewGroup>(R.id.c_stocks)
 
         // The model
-        val stocksViewModel = ViewModelProviders.of(this).get(StockPriceViewModel::class.java)
+        val stocksViewModel : StockPriceViewModel by viewModels()
 
         TICKERS.forEach { ticker ->
             // The stock views

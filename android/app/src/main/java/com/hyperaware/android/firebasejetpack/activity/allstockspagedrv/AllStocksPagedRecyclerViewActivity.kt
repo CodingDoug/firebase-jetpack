@@ -16,8 +16,8 @@
 
 package com.hyperaware.android.firebasejetpack.activity.allstockspagedrv
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +36,7 @@ class AllStocksPagedRecyclerViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // The model
-        val stocksViewModel = ViewModelProviders.of(this).get(PagedStockPricesViewModel::class.java)
+        val stocksViewModel: PagedStockPricesViewModel by viewModels()
 
         // The root view/scaffolding
         setContentView(R.layout.activity_multi_tracker_recycler_view)

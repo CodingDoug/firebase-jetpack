@@ -16,15 +16,15 @@
 
 package com.hyperaware.android.firebasejetpack.activity.livepricehistory
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.hyperaware.android.firebasejetpack.R
 import com.hyperaware.android.firebasejetpack.viewmodel.StockPriceDisplayHistoryQueryResults
@@ -54,7 +54,7 @@ class StockPriceHistoryActivity : AppCompatActivity() {
             ?: throw IllegalArgumentException("No ticker provided")
 
         // The model is a LiveData that contains a list of history items
-        val priceHistoryViewModel = ViewModelProviders.of(this).get(StockPriceHistoryViewModel::class.java)
+        val priceHistoryViewModel: StockPriceHistoryViewModel by viewModels()
 
         // The root view/scaffolding
         setContentView(R.layout.activity_price_history)
