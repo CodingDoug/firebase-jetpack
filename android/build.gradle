@@ -1,7 +1,7 @@
 buildscript {
     ext {
         android_support_version = '28.0.0'
-        kotlin_version = '1.3.61'
+        kotlin_version = '1.3.72'
         lifecycle_version = '2.2.0'
     }
     repositories {
@@ -9,7 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.3'
     }
