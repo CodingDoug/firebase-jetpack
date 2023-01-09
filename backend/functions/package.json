@@ -12,8 +12,8 @@
   "main": "lib/index.js",
   "dependencies": {
     "command-line-args": "^5.1.1",
-    "firebase-admin": "^8.12.1",
-    "firebase-functions": "^3.6.1",
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^3.24.1",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
